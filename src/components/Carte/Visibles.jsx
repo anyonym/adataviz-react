@@ -6,15 +6,17 @@ function Visibles({stationnements, recherche}) {
 
     return(
     <>
+        <div id="total-results">
         <p>
           {visibles.length} {visibles.length > 1 ? "zones de stationnement" : "zone de stationnement"}
         </p>
         {visibles.length === 0 && <p>Aucun résultat</p>}
-        <div className="carte">
+        </div>
+        <div className="results">
           {visibles.map((stationnement) => (
             <Carte
-              key={stationnement.id}
               commune={stationnement.commune}
+              key={stationnement.id}
               quartier={stationnement.quartier}
               nombrePlaces={stationnement.nombrePlaces}
               lon={stationnement.geoPoint2d.lon}
