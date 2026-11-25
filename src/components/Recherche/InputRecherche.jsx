@@ -7,7 +7,7 @@ function InputRecherche({recherche, setRecherche}) {
           id="recherche"
           type="search"
           placeholder="Ex. : 12"
-          autocomplete="off"
+          autoComplete="off"
           value={recherche}
           onChange={(event) => setRecherche(event.target.value)}
         />
