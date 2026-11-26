@@ -1,111 +1,484 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* =========================
+   RÉINITIALISATION
+========================= */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+/* =========================
+   PAGE
+========================= */
 
 body {
-  margin: 0;
+    min-height: 100vh;
+    background-color: rgb(2, 138, 249);
+    font-family: Arial, sans-serif;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    color: rgb(2, 138, 249);
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+h1 + h2 {
+    margin-top: 1.5rem;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+main {
+    width: 100%;
+    background-color: rgb(2, 138, 249);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+/* =========================
+   BOUTONS
+========================= */
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Style commun des boutons */
+
+nav button,
+.pages button,
+.pagination button,
+#btn-retour {
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: rgb(2, 138, 249);
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+nav button {
+    width: 100%;
+    max-width: 275px;
+    margin: 8px;
+}
+
+/* Animation au survol */
+
+nav button:not(:disabled):hover,
+.pages button:not(:disabled):hover,
+.pagination button:not(:disabled):hover,
+#btn-retour:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgb(255, 169, 20);
+    color: white;
+}
+
+/* Animation au clic */
+
+nav button:not(:disabled):active,
+.pages button:not(:disabled):active,
+.pagination button:not(:disabled):active,
+#btn-retour:not(:disabled):active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouton désactivé */
+
+nav button:disabled,
+.pages button:disabled,
+.pagination button:disabled,
+#btn-retour:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Réinitialisation après le clic */
+
+.pages button:not(:hover):focus,
+.pagination button:not(:hover):focus {
+    background-color: white;
+    color: rgb(2, 138, 249);
+}
+
+/* Accessibilité : navigation au clavier */
+
+nav button:focus-visible,
+.pages button:focus-visible,
+.pagination button:focus-visible,
+#btn-retour:focus-visible {
+    outline: 3px solid rgb(255, 169, 20);
+    outline-offset: 3px;
+}
+
+/* =========================
+   NOMBRE DE RÉSULTATS
+========================= */
+
+#total-results {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Compatibilité avec le composant Visibles */
+
+.visibles > p {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+/* =========================
+   RECHERCHE
+========================= */
+
+.recherche-places {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px;
+}
+
+.recherche-places {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.recherche-places input,
+.visibles > input {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Le composant Visibles proposé utilise directement son input */
+
+.visibles > input {
+    display: block;
+    margin: 15px auto;
+}
+
+.recherche-places input:focus-visible,
+.visibles > input:focus-visible {
+    outline: 3px solid rgb(255, 169, 20);
+    outline-offset: 3px;
+}
+
+/* =========================
+   CARTES DES RÉSULTATS
+========================= */
+
+/* Ancienne classe conservée */
+
+.results {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px;
+}
+
+/* Nouvelle liste de résultats React */
+
+.liste-stationnements {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px;
+}
+
+/* Style commun des cartes */
+
+.carte,
+.carte-stationnement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
+    padding: 10px;
+    background-color: white;
+    border: 2px solid rgb(255, 169, 20);
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+/* Anciennes cartes */
+
+.results .carte {
+    flex: 0 0 calc(50% - 6px);
+    cursor: pointer;
+}
+
+/* Nouvelles cartes */
+
+.carte-stationnement {
+    width: 100%;
+}
+
+/* Contenu des cartes */
+
+.carte ul,
+.carte-stationnement ul {
+    list-style: none;
+    margin: 8px 0;
+}
+
+.carte p,
+.carte-stationnement p {
+    margin-top: 8px;
+}
+
+.carte h2,
+.carte-stationnement h2 {
+    margin-bottom: 8px;
+    color: rgb(2, 138, 249);
+}
+
+/* =========================
+   CARTE DÉTAILLÉE
+========================= */
+
+.focus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 100vh;
+    padding: 15px;
+    background-color: rgb(2, 138, 249);
+}
+
+.focus .carte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: none;
+    width: 100%;
+    max-width: 600px;
+    min-height: 0;
+    padding: 15px;
+    background-color: white;
+    border: 3px solid rgb(255, 169, 20);
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+}
+
+.focus .carte h3 {
+    margin: 0 0 8px;
+}
+
+.focus .carte ul {
+    margin: 5px 0;
+}
+
+.focus .carte p {
+    margin-top: 8px;
+}
+
+/* =========================
+   MINI-CARTES OPENSTREETMAP
+========================= */
+
+/* Conteneur de la mini-carte dans les résultats */
+
+.mini-carte {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+/* iframe OSM dans les résultats */
+
+.mini-carte iframe {
+    display: block;
+    width: 100%;
+    height: 150px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Lien vers OpenStreetMap */
+
+.mini-carte a {
+    display: inline-block;
+    color: rgb(2, 138, 249);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.mini-carte a:hover {
+    color: rgb(255, 169, 20);
+    text-decoration: underline;
+}
+
+/* Conteneur de la carte détaillée */
+
+.conteneur-mini-carte-focus {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Mini-carte dans la fiche détaillée */
+
+.mini-carte-focus {
+    display: block;
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* =========================
+   BOUTON RETOUR
+========================= */
+
+#btn-retour {
+    margin-top: 15px;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 10px;
+    padding: 10px;
+}
+
+.pagination span {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pagination button {
+    padding: 12px 16px;
+}
+
+/* =========================
+   CLASSE POUR MASQUER
+========================= */
+
+.cache,
+nav.cache,
+.pages.cache {
+    display: none;
+}
+
+/* =========================
+   PIED DE PAGE
+========================= */
+
+footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: white;
+    color: rgb(2, 138, 249);
+}
+
+/* =========================
+   RESPONSIVE 768px et +
+========================= */
+
+@media (min-width: 768px) {
+
+    /* Boutons de navigation alignés */
+
+    nav {
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    nav button {
+        flex: 1;
+        max-width: 300px;
+        margin: 0;
+    }
+
+    /* Trois cartes par ligne */
+
+    .results {
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    .results .carte {
+        flex: 0 0 calc((100% - 30px) / 3);
+    }
+
+    .liste-stationnements {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    /* Mini-cartes un peu plus hautes sur tablette */
+
+    .mini-carte iframe {
+        height: 170px;
+    }
+}
+
+/* =========================
+   RESPONSIVE 1024px et +
+========================= */
+
+@media (min-width: 1024px) {
+
+    /* Quatre cartes par ligne */
+
+    .results .carte {
+        flex: 0 0 calc((100% - 45px) / 4);
+    }
+
+    .liste-stationnements {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Mini-cartes plus confortables */
+
+    .mini-carte iframe {
+        height: 180px;
+    }
 }

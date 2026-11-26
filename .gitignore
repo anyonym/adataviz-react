@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 package-lock.json
+/src/components/Recherche
+/src/components/Pages
+/src/components/Count
+/src/components/Compteur
