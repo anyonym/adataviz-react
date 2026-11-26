@@ -133,7 +133,7 @@ nav button:focus-visible,
     padding: 15px;
 }
 
-.recherche-places label {
+.recherche-places {
     color: white;
     font-weight: bold;
     text-align: center;

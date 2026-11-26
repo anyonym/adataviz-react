@@ -23,4 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 package-lock.json
-donnees.js
+/src/components/Recherche
+/src/components/Pages
+/src/components/Count
+/src/components/Compteur
