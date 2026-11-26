@@ -7,4 +7,4 @@ function Entete() {
     )
 }
 
-export default Entete
+export default Entete;
