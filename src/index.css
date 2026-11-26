@@ -30,7 +30,7 @@ header {
 }
 
 h1 + h2 {
-  margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 main {
@@ -39,7 +39,7 @@ main {
 }
 
 /* =========================
-   BOUTONS DE NAVIGATION
+   BOUTONS
 ========================= */
 
 nav {
@@ -50,8 +50,11 @@ nav {
     padding: 10px;
 }
 
+/* Style commun des boutons */
+
 nav button,
-pages button,
+.pages button,
+.pagination button,
 #btn-retour {
     padding: 1rem;
     border: none;
@@ -79,6 +82,7 @@ nav button {
 
 nav button:not(:disabled):hover,
 .pages button:not(:disabled):hover,
+.pagination button:not(:disabled):hover,
 #btn-retour:not(:disabled):hover {
     transform: translateY(-3px);
     box-shadow: 0 7px 12px rgba(0, 0, 0, 0.3);
@@ -90,14 +94,26 @@ nav button:not(:disabled):hover,
 
 nav button:not(:disabled):active,
 .pages button:not(:disabled):active,
+.pagination button:not(:disabled):active,
 #btn-retour:not(:disabled):active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Bouton désactivé */
+
+nav button:disabled,
+.pages button:disabled,
+.pagination button:disabled,
+#btn-retour:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 /* Réinitialisation après le clic */
 
-.pages button:not(:hover):focus {
+.pages button:not(:hover):focus,
+.pagination button:not(:hover):focus {
     background-color: white;
     color: rgb(2, 138, 249);
 }
@@ -106,6 +122,7 @@ nav button:not(:disabled):active,
 
 nav button:focus-visible,
 .pages button:focus-visible,
+.pagination button:focus-visible,
 #btn-retour:focus-visible {
     outline: 3px solid rgb(255, 169, 20);
     outline-offset: 3px;
@@ -118,10 +135,21 @@ nav button:focus-visible,
 #total-results {
     text-align: center;
     padding: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Compatibilité avec le composant Visibles */
+
+.visibles > p {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
 }
 
 /* =========================
-   RECHERCHE PAR NOMBRE DE PLACES
+   RECHERCHE
 ========================= */
 
 .recherche-places {
@@ -139,7 +167,8 @@ nav button:focus-visible,
     text-align: center;
 }
 
-.recherche-places input {
+.recherche-places input,
+.visibles > input {
     width: 100%;
     max-width: 300px;
     padding: 12px;
@@ -148,7 +177,15 @@ nav button:focus-visible,
     font-size: 1rem;
 }
 
-.recherche-places input:focus-visible {
+/* Le composant Visibles proposé utilise directement son input */
+
+.visibles > input {
+    display: block;
+    margin: 15px auto;
+}
+
+.recherche-places input:focus-visible,
+.visibles > input:focus-visible {
     outline: 3px solid rgb(255, 169, 20);
     outline-offset: 3px;
 }
@@ -156,6 +193,8 @@ nav button:focus-visible,
 /* =========================
    CARTES DES RÉSULTATS
 ========================= */
+
+/* Ancienne classe conservée */
 
 .results {
     display: flex;
@@ -166,12 +205,23 @@ nav button:focus-visible,
     padding: 10px;
 }
 
-.carte {
+/* Nouvelle liste de résultats React */
+
+.liste-stationnements {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px;
+}
+
+/* Style commun des cartes */
+
+.carte,
+.carte-stationnement {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    flex: 0 0 calc(50% - 6px);
     min-width: 0;
     padding: 10px;
     background-color: white;
@@ -180,17 +230,36 @@ nav button:focus-visible,
     overflow-wrap: anywhere;
 }
 
+/* Anciennes cartes */
+
 .results .carte {
+    flex: 0 0 calc(50% - 6px);
     cursor: pointer;
 }
 
-.carte ul {
+/* Nouvelles cartes */
+
+.carte-stationnement {
+    width: 100%;
+}
+
+/* Contenu des cartes */
+
+.carte ul,
+.carte-stationnement ul {
     list-style: none;
     margin: 8px 0;
 }
 
-.carte p {
+.carte p,
+.carte-stationnement p {
     margin-top: 8px;
+}
+
+.carte h2,
+.carte-stationnement h2 {
+    margin-bottom: 8px;
+    color: rgb(2, 138, 249);
 }
 
 /* =========================
@@ -236,27 +305,53 @@ nav button:focus-visible,
     margin-top: 8px;
 }
 
-/* =====================================================
+/* =========================
    MINI-CARTES OPENSTREETMAP
-===================================================== */
+========================= */
 
-/* Mini-carte dans les résultats */
+/* Conteneur de la mini-carte dans les résultats */
+
 .mini-carte {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+/* iframe OSM dans les résultats */
+
+.mini-carte iframe {
     display: block;
     width: 100%;
     height: 150px;
-    margin-top: 15px;
     border: none;
     border-radius: 8px;
 }
 
+/* Lien vers OpenStreetMap */
+
+.mini-carte a {
+    display: inline-block;
+    color: rgb(2, 138, 249);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.mini-carte a:hover {
+    color: rgb(255, 169, 20);
+    text-decoration: underline;
+}
+
 /* Conteneur de la carte détaillée */
+
 .conteneur-mini-carte-focus {
     width: 100%;
     margin-top: 20px;
 }
 
 /* Mini-carte dans la fiche détaillée */
+
 .mini-carte-focus {
     display: block;
     width: 100%;
@@ -277,26 +372,24 @@ nav button:focus-visible,
    PAGINATION
 ========================= */
 
-.pages {
+.pagination {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-    padding: 20px;
+    gap: 15px;
+    margin: 25px 10px;
+    padding: 10px;
 }
 
-.pages button {
-    width: 150px;
+.pagination span {
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 
-.pages button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+.pagination button {
+    padding: 12px 16px;
 }
 
 /* =========================
@@ -329,7 +422,7 @@ footer {
 
 @media (min-width: 768px) {
 
-    /* Boutons de filtre alignés */
+    /* Boutons de navigation alignés */
 
     nav {
         flex-direction: row;
@@ -354,6 +447,17 @@ footer {
     .results .carte {
         flex: 0 0 calc((100% - 30px) / 3);
     }
+
+    .liste-stationnements {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    /* Mini-cartes un peu plus hautes sur tablette */
+
+    .mini-carte iframe {
+        height: 170px;
+    }
 }
 
 /* =========================
@@ -366,5 +470,15 @@ footer {
 
     .results .carte {
         flex: 0 0 calc((100% - 45px) / 4);
+    }
+
+    .liste-stationnements {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Mini-cartes plus confortables */
+
+    .mini-carte iframe {
+        height: 180px;
     }
 }

@@ -1,65 +1,55 @@
-import { useState } from 'react'
-import useGetdatas from './components/Getdatas.jsx'
-import Entete from './components/Entete/Entete.jsx'
-import Nav from './components/Nav/Nav.jsx'
-import InputRecherche from './components/Recherche/InputRecherche.jsx'
-import Visibles from './components/Carte/Visibles.jsx'
-import Pages from './components/Pages/Pages.jsx'
-import Footer from './components/Footer/Footer.jsx'
+import { useState } from "react";
 
+import useGetdatas from "./components/Getdatas.jsx";
+import Entete from "./components/Entete/Entete.jsx";
+import Nav from "./components/Nav/Nav.jsx";
+import Visibles from "./components/Carte/Visibles.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 function App() {
-  const [recherche, setRecherche] = useState("");
-  const {datas, chargement, messageErreur} = useGetdatas();
+  // Quartier sélectionné : null signifie qu'aucun filtre n'est actif.
+  const [quartierActif, setQuartierActif] = useState(null);
+
+  const { datas, chargement, messageErreur } = useGetdatas();
+
+  // Active un quartier ou désactive le filtre s'il est déjà sélectionné.
+  function gererFiltreQuartier(quartier) {
+    setQuartierActif((precedent) =>
+      precedent === quartier ? null : quartier
+    );
+  }
 
   return (
     <>
-      <Entete/>
+      <Entete />
 
       <main>
-        <Nav/>
+        <Nav
+          quartierActif={quartierActif}
+          onFiltreQuartier={gererFiltreQuartier}
+        />
+
         {chargement && (
-          <p role="status">
-            Chargement des résultats…
-          </p>
+          <p role="status">Chargement des résultats…</p>
         )}
 
         {messageErreur && (
           <p role="alert">
-            Impossible de charger les données. (
-            {messageErreur}).
+            Impossible de charger les données : {messageErreur}
           </p>
         )}
 
-        {!chargement &&
-          !messageErreur &&
-          datas.length === 0 && (
-            <p>
-              Aucun résultat.
-            </p>
-          )}
-
-        {!chargement &&
-          !messageErreur &&
-          datas.length > 0 && (
-            <>
-              <InputRecherche 
-              recherche={recherche} 
-              setRecherche={setRecherche}
-              />
-              
-              <Visibles 
-              recherche={recherche} 
-              stationnements={datas}
-              />
-            <Pages/>
-          </>
+        {!chargement && !messageErreur && (
+          <Visibles
+            stationnements={datas}
+            quartierActif={quartierActif}
+          />
         )}
       </main>
 
-      <Footer/>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
